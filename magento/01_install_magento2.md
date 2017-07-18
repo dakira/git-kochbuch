@@ -27,9 +27,9 @@ Folgende crobtab Einträge machen:
 
 ```
 MAILTO=""
-* * * * * /opt/plesk/php/7.0/bin/php /var/www/vhosts/yumdap.net/mage2.yumdap.net/mage2/bin/magento cron:run | grep -v "Ran jobs by schedule" >> /var/www/vhosts/yumdap.net/mage2.yumdap.net/mage2/var/log/magento.cron.log
-# * * * * * /opt/plesk/php/7.0/bin/php /var/www/vhosts/yumdap.net/mage2.yumdap.net/mage2/update/cron.php >> /var/www/vhosts/yumdap.net/mage2.yumdap.net/mage2/var/log/update.cron.log
-# * * * * * /opt/plesk/php/7.0/bin/php /var/www/vhosts/yumdap.net/mage2.yumdap.net/mage2/bin/magento setup:cron:run >> /var/www/vhosts/yumdap.net/mage2.yumdap.net/mage2/var/log/setup.cron.log
+* * * * * <path to php binary> <magento install dir>/bin/magento cron:run | grep -v "Ran jobs by schedule" >> <magento install dir>/var/log/magento.cron.log
+* * * * * <path to php binary> <magento install dir>/update/cron.php >> <magento install dir>/var/log/update.cron.log
+* * * * * <path to php binary> <magento install dir>/bin/magento setup:cron:run >> <magento install dir>/var/log/setup.cron.log
 ```
 
 Deutsche Anpassungen installieren
