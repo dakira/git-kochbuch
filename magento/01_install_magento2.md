@@ -1,12 +1,12 @@
 # Magento 2 Installation
 
-> Auf dem Server läuft per default PHP 5.5. Es wird aber PHP 7.0 benötigt. Alle Befehle müssen daher mit *php7* (statt *php*) bzw. composer7 ausgeführt werden!
+> Auf dem Server läuft per default PHP 5.5. Es wird aber PHP 7.0 benötigt. Alle Befehle müssen daher mit *php7* (statt *php*) bzw. *composer7* ausgeführt werden!
 
 > Es werden sowohl Accounts auf [magento.com](https://account.magento.com/customer/account/login), wie auch [github.com](https://github.com) benötigt.
 
 ```
 cd /var/www/vhosts/yumdap.net/mage2.yumdap.net/
-composer7 create-project --repository-url=https://repo.magento.com/ magento/project-community-edition mage2
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition mage2
 cd mage2/
 find var vendor pub/static pub/media app/etc -type f -exec chmod g+w {} \;
 find var vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;
@@ -35,13 +35,13 @@ MAILTO=""
 Deutsche Anpassungen installieren
 
 ```
-composer7 config repositories.firegento_magesetup vcs git@github.com:firegento/firegento-magesetup2.git
-composer7 require firegento/magesetup2:dev-develop
-composer7 require splendidinternet/mage2-locale-de-de
+composer config repositories.firegento_magesetup vcs git@github.com:firegento/firegento-magesetup2.git
+composer require firegento/magesetup2:dev-develop
+php bin/magento module:enable FireGento_MageSetup
+php bin/magento setup:upgrade
+php bin/magento magesetup:setup:run de
+composer require splendidinternet/mage2-locale-de-de
 rm pub/static/frontend/Magento/luma/de_DE/js-translation.json
-php7 bin/magento setup:static-content:deploy de_DE
-php7 bin/magento module:enable FireGento_MageSetup
-php7 bin/magento setup:upgrade
-php7 bin/magento magesetup:setup:run de
-php7 -d memory_limit=-1 bin/magento setup:di:compile
+php bin/magento setup:static-content:deploy de_DE
+php -d memory_limit=-1 bin/magento setup:di:compile
 ```
