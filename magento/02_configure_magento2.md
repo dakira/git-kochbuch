@@ -12,6 +12,6 @@
         <referenceBlock name="view.addto.compare" remove="true" />
         <referenceBlock name="view.addto.wishlist" remove="true" />
 
-  in `/app/design/frontend/Vendor/theme/Magento_Theme/layout/default.xml` einfügen.
+  in `/app/design/frontend/Vendor/theme/Magento_Theme/layout/default.xml` einfügen (siehe [Doku](http://devdocs.magento.com/guides/v2.0/frontend-dev-guide/layouts/xml-manage.html#layout_markup_remove_elements)).
 
 ## Child Theme anlegen
