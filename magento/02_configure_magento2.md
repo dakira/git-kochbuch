@@ -92,46 +92,46 @@ Nun kann mit `grunt watch` das Theme-Less dauerhaft beobachtet werden, so dass m
     Shops -> Konfiguration -> Kunden -> Wishlist
 3. Produktvergleich und Reviews deaktivieren:
 
-```
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>
-        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
-        <referenceBlock name="view.addto.compare" remove="true" />
-        <referenceBlock name="view.addto.wishlist" remove="true" />
-        <referenceBlock name="reviews.tab" remove="true" />
-        <referenceBlock name="product.review.form" remove="true" />
-        <referenceBlock name="product.info.review" remove="true" />
-    </body>
-</page>
-```
-  in */app/design/frontend/Vendor/theme/Magento_Theme/layout/default.xml* einfügen (siehe [Doku](http://devdocs.magento.com/guides/v2.0/frontend-dev-guide/layouts/xml-manage.html#layout_markup_remove_elements)).
+    ```
+    <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+        <body>
+            <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+            <referenceBlock name="view.addto.compare" remove="true" />
+            <referenceBlock name="view.addto.wishlist" remove="true" />
+            <referenceBlock name="reviews.tab" remove="true" />
+            <referenceBlock name="product.review.form" remove="true" />
+            <referenceBlock name="product.info.review" remove="true" />
+        </body>
+    </page>
+    ```
+    in */app/design/frontend/Vendor/theme/Magento_Theme/layout/default.xml* einfügen (siehe [Doku](http://devdocs.magento.com/guides/v2.0/frontend-dev-guide/layouts/xml-manage.html#layout_markup_remove_elements)).
 
 4. Eigenen **footer_links** CMS-Block benutzen
 
-```
-<referenceContainer name="footer-container">
-    <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="footer content">
-        <block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" template="switch/stores.phtml"/>
-        <block class="Magento\Cms\Block\Block" name="footer_links">
-            <arguments>
-                <argument name="block_id" xsi:type="string">footer_links</argument>
-            </arguments>
-        </block>
-        <block class="Magento\Theme\Block\Html\Footer" name="copyright" template="html/copyright.phtml"/>
-    </container>
-</referenceContainer>
-```
+    ```
+    <referenceContainer name="footer-container">
+        <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="footer content">
+            <block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" template="switch/stores.phtml"/>
+            <block class="Magento\Cms\Block\Block" name="footer_links">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer_links</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Theme\Block\Html\Footer" name="copyright" template="html/copyright.phtml"/>
+        </container>
+    </referenceContainer>
+    ```
 
-  in den `<body>` der */app/design/frontend/Vendor/theme/Magento_Theme/layout/default.xml* einfügen. Unter Inhalt->Blöcke einen Block namens *footer_links* erstellen, der bspw. folgenden Inhalt haben könnte:
+    in den `<body>` der */app/design/frontend/Vendor/theme/Magento_Theme/layout/default.xml* einfügen. Unter Inhalt->Blöcke einen Block namens *footer_links* erstellen, der bspw. folgenden Inhalt haben könnte:
   
-```
-<ul class="footer links">
-    <li class="nav item"><a href="{{store url="agb"}}">AGB</a></li>
-    <li class="nav item"><a href="{{store url="widerruf"}}">Widerruf</a></li>
-    <li class="nav item"><a href="{{store url="lieferung"}}">Lieferung &amp; Versand</a></li>
-    <li class="nav item"><a href="{{store url="zahlung"}}">Zahlungsarten</a></li>
-    <li class="nav item"><a href="datenschutz">Datenschutz</a></li>
-    <li class="nav item"><a href="bestellung">Bestellvorgang</a></li>
-    <li class="nav item"><a href="{{store url="impressum"}}">Impressum</a></li>
-</ul>
-```
+    ```
+    <ul class="footer links">
+        <li class="nav item"><a href="{{store url="agb"}}">AGB</a></li>
+        <li class="nav item"><a href="{{store url="widerruf"}}">Widerruf</a></li>
+        <li class="nav item"><a href="{{store url="lieferung"}}">Lieferung &amp; Versand</a></li>
+        <li class="nav item"><a href="{{store url="zahlung"}}">Zahlungsarten</a></li>
+        <li class="nav item"><a href="datenschutz">Datenschutz</a></li>
+        <li class="nav item"><a href="bestellung">Bestellvorgang</a></li>
+        <li class="nav item"><a href="{{store url="impressum"}}">Impressum</a></li>
+    </ul>
+    ```
