@@ -19,11 +19,8 @@ mkdir -p web/{css,css/source,fonts,images,js}
 *app/design/frontend/Vendor/theme/theme.xml*
 ```
 <theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/theme.xsd">
-     <title>My Theme Name</title> <!-- your theme's name -->
-     <parent>Magento/blank</parent> <!-- the parent theme, in case your theme inherits from an existing theme -->
-    <!-- <media>
-         <preview_image>media/preview.jpg</preview_image> the path to your theme's preview image
-     </media> -->
+     <title>My Theme Name</title>
+     <parent>Magento/blank</parent>
 </theme>
 ```
 *app/design/frontend/Vendor/theme/registration.php*
@@ -35,19 +32,19 @@ mkdir -p web/{css,css/source,fonts,images,js}
  */
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::THEME,
-    'frontend/10vorne/kosa',
+    'frontend/Vendor/theme',
     __DIR__
 );
 ```
 
 ### 3. Less-Datei anlegen und Kompilierung aktivieren
 
-Sämtliche CSS-Anpassungen sollten in der Datei *app/design/frontend/Vendor/theme/web/css/_theme.less* stattfinden. Damit diese kompiliert werden, müssen npm-Abhängigkeiten und grunt installiert werden.
+Sämtliche CSS-Anpassungen sollten in der Datei *app/design/frontend/Vendor/theme/web/css/source/_theme.less* stattfinden. Damit diese kompiliert werden, müssen npm-Abhängigkeiten und grunt installiert werden.
 
 ```
 cd <magento_root>
 cp package.json{.sample,}
-cp Grundfile.js{.sample,}
+cp Gruntfile.js{.sample,}
 npm install
 # falls noch nicht global verfügbar, grunt installieren. U.U. muss dies als root geschehen
 npm install -g grunt-cli
