@@ -147,3 +147,27 @@ Unterschiede anzeigen:
 - Mit einem grafischen Programm
 
     `git difftool`
+    
+## Branches
+
+### Auf eine Branch wechseln, die Remote schon existiert
+
+Das nennt sich im Git-Jargon auch *remote tracken*. Dazu gibt es bei git mehrere Wege, hier die kürzesten:
+
+    git checkout --track <remote>/<remote_branch>
+    
+oder
+
+    git fetch <remote> <remote_branch>:<local_branch> # z.B.
+    git fetch upstream develop:develop
+    
+Mit dem ersten Befehl wird die Branch vom remote holt, eine gleichnamige lokale Branch erstellt, mit der remote Branch verbunden und zuletzt auf diese gewechselt. Der zweite Befehl macht das gleiche, aber ohne auf die Branch zu wechseln.
+
+### Branches lokal und remote löschen
+
+Braucht man eine Branch nicht mehr, weil ihr inhalt z.B. in master gemerged wurde, kann man sie löschen. Dies muss man mit zwei Befehlen für die lokale bzw. die remote Branch machen.
+
+    git branch -d <branch>    # löscht die Branch *nur* wenn der Inhalt gemerged wurde oder anderswo existiert
+    git branch -D <branch>    # löscht die Branch in jedem Fall
+    git push origin :<branch> # löscht die remote Branch
+
