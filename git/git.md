@@ -21,6 +21,52 @@ Remotes sind *entfernte* Quellen für ein Repository. Es können zentrale Server
 
     `git remote rm upstream`
 
+## Branches
+
+### Eine `feature` Branch erstellen und direkt hineinwechseln
+
+    git checkout -b feature
+
+### Eine `feature` Branch in `master` mergen
+
+Hat man ein Feature so weit, dass es in den Master-Zweig übernommen werden soll, muss man ein Merge durchführen. Dazu bringt man die Branch erst mal auf den aktuellen Stand von master (s. *rebase to master*), beseitigt etwaige Konflikte und führt erst dann den Merge durch.
+
+Falls sich noch nicht commitete Änderungen im `feature` Zweig befinden, die nicht mit gemerged werden sollen, müssen diese voher mit `git stash` *versteckt* werden. Später können sie mit `git stash pop` wieder zurückgeholt werden.
+
+Zuerst der rebase. Auf der `feature` branch wird dazu folgender Befehl ausgeführt. `origin` ist hierbei das remote, welches die master-branch enthält in welche germerged werden soll.
+
+    git pull --rebase origin master
+
+Treten nun Konflikte auf müssen diese zuerst beseitigt werden. Dazu die Hinweise von `git status` befolgen. Nun folgt der Merge:
+
+    git checkout master
+    # noch mal schnell dafür sorgen, dass master auch wirklich auf dem Stand des remotes ist
+    git pull
+    git merge feature
+    
+Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun gelöscht werden (s.u.)
+
+### Auf eine Branch wechseln, die Remote schon existiert
+
+Das nennt sich im Git-Jargon auch *remote tracken*. Dazu gibt es bei git mehrere Wege, hier die kürzesten:
+
+    git checkout --track <remote>/<remote_branch>
+    
+oder
+
+    git fetch <remote> <remote_branch>:<local_branch> # z.B.
+    git fetch upstream develop:develop
+    
+Mit dem ersten Befehl wird die Branch vom remote holt, eine gleichnamige lokale Branch erstellt, mit der remote Branch verbunden und zuletzt auf diese gewechselt. Der zweite Befehl macht das gleiche, aber ohne auf die Branch zu wechseln.
+
+### Branches lokal und remote löschen
+
+Braucht man eine Branch nicht mehr, weil ihr inhalt z.B. in master gemerged wurde, kann man sie löschen. Dies muss man mit zwei Befehlen für die lokale bzw. die remote Branch machen.
+
+    git branch -d <branch>    # löscht die Branch *nur* wenn der Inhalt gemerged wurde oder anderswo existiert
+    git branch -D <branch>    # löscht die Branch in jedem Fall
+    git push origin :<branch> # löscht die remote Branch
+
 ## Undo
 
 Manchmal will man etwas ausprobieren und wenn es nicht klappt schnell zurück zum vorherigen Stand. Vor der Arbeit legt man dazu einen s.g. *Work-In-Progress*-Commit an (als Speicherstand). Danach kann man zum *wegwerfen* der Arbeit einfach git resetten. Es ist besonders praktisch sich für diese beiden Befehle aliase anzulegen.
@@ -148,26 +194,3 @@ Unterschiede anzeigen:
 
     `git difftool`
     
-## Branches
-
-### Auf eine Branch wechseln, die Remote schon existiert
-
-Das nennt sich im Git-Jargon auch *remote tracken*. Dazu gibt es bei git mehrere Wege, hier die kürzesten:
-
-    git checkout --track <remote>/<remote_branch>
-    
-oder
-
-    git fetch <remote> <remote_branch>:<local_branch> # z.B.
-    git fetch upstream develop:develop
-    
-Mit dem ersten Befehl wird die Branch vom remote holt, eine gleichnamige lokale Branch erstellt, mit der remote Branch verbunden und zuletzt auf diese gewechselt. Der zweite Befehl macht das gleiche, aber ohne auf die Branch zu wechseln.
-
-### Branches lokal und remote löschen
-
-Braucht man eine Branch nicht mehr, weil ihr inhalt z.B. in master gemerged wurde, kann man sie löschen. Dies muss man mit zwei Befehlen für die lokale bzw. die remote Branch machen.
-
-    git branch -d <branch>    # löscht die Branch *nur* wenn der Inhalt gemerged wurde oder anderswo existiert
-    git branch -D <branch>    # löscht die Branch in jedem Fall
-    git push origin :<branch> # löscht die remote Branch
-
