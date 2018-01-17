@@ -1,9 +1,11 @@
 # Notizen
 
 - [Git](git/git.md)
-- Linux
 - Laravel
   - [Testing](laravel/laravel_testing.md)
+- Tooling
+  - [Vagrant](tooling/vagrant.md)
+- Linux/Server
 - Magento
   1. [Installation](magento/01_install_magento2.md)
   2. [Konfiguration](magento/02_configure_magento2.md)
