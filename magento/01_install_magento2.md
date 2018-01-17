@@ -1,7 +1,5 @@
 # Magento 2 Installation
 
-> Auf dem Server läuft per default PHP 5.5. Es wird aber PHP 7.0 benötigt. Alle Befehle müssen daher mit *php7* (statt *php*) bzw. *composer7* ausgeführt werden!
-
 > Es werden sowohl Accounts auf [magento.com](https://account.magento.com/customer/account/login), wie auch [github.com](https://github.com) benötigt.
 
 ```
