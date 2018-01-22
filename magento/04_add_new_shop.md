@@ -13,6 +13,8 @@
 
 ## Im Terminal auf dem Server
 
+> **WICHTIG**: Im folgenden wird immer vom Ordner der Hauptinstallation ausgegangen. Zum Testen und neu bauen sollte immer die Testinstallation unter `~/test.hamburgrecords.com/magento` genommen werden.
+
     ssh hhrec@hamburgrecords.com
     cd ~/mage2.hamburgrecords.com/magento/app/design/frontend/hhrec
     cp -ar feuerschwanz <new_theme> && sed -i 's/feuerschwanz/<new_theme>/g' <new_theme>/registration.php && sed -i 's/Feuerschwanz/New Theme/g' <new_theme>/theme.xml
@@ -34,9 +36,9 @@ Dort das Theme so hinterlegen, wie die anderen bereits hinterlegt sind, dann spe
 
 Nun ist das neue Theme einsatzbereit und kann bspw. über die Datei `app/design/frontend/hhrec/vier_promille/web/css/source/_theme.less` bearbeitet werden. Damit die Updates live übernommen werden muss noch der *Watcher* gestartet werden. Dazu folgenden Befehl ausführen:
 
-    grunt watch.
+    grunt watch:<new_theme>
 
-Für Details hierzu siehe auch [Magento Konfiguration](02_configure_magento2.md).
+Für Details hierzu siehe auch [Magento Konfiguration](02_configure_magento2.md). Eigentlich muss für Änderungen nun nur noch der watch-Befehl ausgeführt werden. Wenn das mal nicht klappt (also Änderungen nicht erkannt werden) hilft es die drei Befehle von oben noch mal zu starten (clean, exec, less).
     
 
 ## Im Magento Backend
