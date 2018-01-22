@@ -2,6 +2,7 @@
 
 - [Git](git/git.md)
 - Laravel
+  - [Good Packages](laravel/packages.md)
   - [Testing](laravel/laravel_testing.md)
 - Tooling
   - [Vagrant](tooling/vagrant.md)
