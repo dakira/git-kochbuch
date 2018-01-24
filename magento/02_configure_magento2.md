@@ -71,9 +71,9 @@ theme: {
 Dann **einmalig** folgende Befehle ausführen:
 
 ```
-grunt clean
+grunt clean:<new_theme>
 rm -r pub/static/* var/view_preprocessed/* var/cache/* var/di var/generation
-php -d memory_limit=-1 bin/magento setup:di:compile
+bin/magento setup:di:compile
 bin/magento setup:static-content:deploy de_DE
 grunt exec:theme
 grunt less:theme
@@ -132,3 +132,14 @@ Nun kann mit `grunt watch` das Theme-Less dauerhaft beobachtet werden, so dass m
         <li class="nav item"><a href="{{store url="impressum"}}">Impressum</a></li>
     </ul>
     ```
+
+## Problemlösungen
+
+Wenn es Probleme gibt, dass die Themes nicht erkannt werden hilft es folgende Befehle auszufühen:
+
+    rm -r pub/static/* var/view_preprocessed/* var/cache/* var/di var/generation
+    bin/magento cache:clean
+    bin/magento cache:flush
+    bin/magento setup:upgrade
+    bin/magento setup:di:compile
+    bin/magento setup:static-content:deploy de_DE en_US

@@ -3,11 +3,9 @@
 ## Plesk Einstellungen
 
 1. Eine neue Subdomain erstellen (z.B. 4promille.hamburgrecords.com) und als Dokumentenstamm `mage2.hamburgrecords.com/magento` hinterlegen. In den PHP-Einstellungen für die neue Subdomain die Version 7.0 festlegen.
-2. In den *Apache und Nginx Einstellungen* für die Domain muss noch der Store-Code hinterlegt werden. Das muss man für http und https hinterlegen:
-    ```
-    SetEnv MAGE_RUN_CODE "vier_promille_de"
-    SetEnv MAGE_RUN_TYPE "store"
-    ```
+2. In den *Apache und Nginx Einstellungen* für die Domain muss noch der Store-Code hinterlegt werden. Das muss man für http und https hinterlegen:  
+    `SetEnv MAGE_RUN_CODE "vier_promille_de"`  
+    `SetEnv MAGE_RUN_TYPE "store"`
 3. Unter *Tools und Einstellungen -> Service-Verwaltung* die Dienste Nginx und Apache neu starten.
 4. Nach ca. 10 Minuten Wartezeit dürfte die Domain erreichbar sein. Nun kann man in den Einstellungen der Subdomain ein **SSL-Zertifikat** bei Lets Encrypt beantragen.
 
