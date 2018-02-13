@@ -24,15 +24,18 @@ Mit dem letzten Befehl wird der Theme-Ordner erstellt. Für 4Promille würde das
 Nun muss das Theme aktiviert werden
 
     cd ~/mage2.hamburgrecords.com/magento
+    bin/magento setup:upgrade
     micro dev/tools/grunt/configs/themes.js
 
-Dort das Theme so hinterlegen, wie die anderen bereits hinterlegt sind, dann speichern (ctrl+s) und beenden (ctrl+q).
+Dort das Theme so hinterlegen, wie die anderen bereits hinterlegt sind, dann speichern (ctrl+s) und beenden (ctrl+q). Jetzt wird das bauen der CSS-Dateien vorbereitet.
+
+> **Hinweis:** Falls es bei einem der Befehle (i.d.R. exec) zu Fehlern kommt, hilft es die unter [Problemlösungen](#toubleshooting) genannten Befehle in Reihenfolge auszuführen.
 
     grunt clean:<new_theme>
     grunt exec:<new_theme>
     grunt less:<new_theme>
 
-Nun ist das neue Theme einsatzbereit und kann bspw. über die Datei `app/design/frontend/hhrec/vier_promille/web/css/source/_theme.less` bearbeitet werden. Damit die Updates live übernommen werden muss noch der *Watcher* gestartet werden. Dazu folgenden Befehl ausführen:
+Nun ist das neue Theme einsatzbereit und kann bspw. über die Datei `app/design/frontend/hhrec/vier_promille/web/css/source/_theme.less` bearbeitet werden. Damit die Updates live übernommen werden muss noch der *Watcher* gestartet werden. Dieser überwacht das Theme auf Änderungen und startet automatisch die Kompilation. Dazu folgenden Befehl ausführen:
 
     grunt watch:<new_theme>
 
@@ -44,3 +47,15 @@ Für Details hierzu siehe auch [Magento Konfiguration](02_configure_magento2.md)
 1. **Im Backend** unter *Produkte -> Kategorien* Hauptkategorie anlegen. Unter *Shops -> Alle Stores* eine Website, einen Shop und ein oder mehrere StoreViews anlegen. Dabei den Website-Code kleinschreiben (z.B. `vier_promille`), beim Shop die Hauptkategorie zuweisen und die StoreView nach der jeweiligen Sprache benennen (z.B. *Deutsch* oder *English*) und einen entspr. Code wählen (z.B. `vier_promille_de`).
 2. Auf *Shops -> Konfiguration -> Allgemein -> Web* gehen und dann als StoreView die Website auswählen (in unserem Fall also *4Promille*). Dort Basis- und Secure-URLs so anpassen, dass es zur erstellten Subdomain passt. Hier können unter *Allgemein* noch die Shopinformationen und das Impressum für den aktuellen Store angepasst werden. Unter *Store-Email-Adressen* kann man noch die entspr. Kontakte hinterlegen.
 3. Unter *Inhalt -> Design -> Konfiguration* die Website wählen und rechts auf bearbeiten drücken. Dort das Theme auswählen und alle weiteren Einstellungen machen (Logo, Header, Footer, usw.).
+
+<span id="troubleshooting"></span>
+## Problemlösungen
+
+Wenn es Probleme gibt, dass die Themes nicht erkannt werden hilft es folgende Befehle auszufühen:
+
+    rm -r pub/static/* var/view_preprocessed/* var/cache/* var/di var/generation
+    bin/magento cache:clean
+    bin/magento cache:flush
+    bin/magento setup:upgrade
+    bin/magento setup:di:compile
+    bin/magento setup:static-content:deploy de_DE en_US
