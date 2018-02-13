@@ -16,6 +16,7 @@
 - [Eloquent Sluggable](https://github.com/cviebrock/eloquent-sluggable), generate slugs for models
 - [Laravel Sluggable](https://github.com/spatie/laravel-sluggable), An opinionated package to create slugs for Eloquent models
 - [Laravel Backup](https://github.com/spatie/laravel-backup), creates backup zip of whole application
+- [Model Caching for Laravel](https://github.com/GeneaLabs/laravel-model-caching)
 - [No Captcha](https://github.com/anhskohbo/no-captcha), Google ReCaptcha v2
 - [laravel-activitylog](https://github.com/spatie/laravel-activitylog), Log activity inside your Laravel app
 - [laravel-translatable](https://github.com/spatie/laravel-translatable), Making Eloquent models translatable
@@ -36,3 +37,5 @@
 - [laravel-binary-uuid](https://github.com/spatie/laravel-binary-uuid), Using optimised binary UUIDs in Laravel
 - [laravel-feed](https://github.com/spatie/laravel-feed), Easily generate RSS feeds
 - [Laravel Strife Webhooks](https://github.com/spatie/laravel-stripe-webhooks), Handle Stripe webhooks in a Laravel application
+- [Under Construction](https://github.com/larsjanssen6/underconstruction), display Under Construction notice unless you know the code
+- [A Blog](https://github.com/spatie/murze.be), Freek Murzes blog
