@@ -31,7 +31,7 @@ Remotes sind *entfernte* Quellen für ein Repository. Es können zentrale Server
 
 Hat man ein Feature so weit, dass es in den Master-Zweig übernommen werden soll, muss man ein Merge durchführen. Dazu bringt man die Branch erst mal auf den aktuellen Stand von master (s. *rebase to master*), beseitigt etwaige Konflikte und führt erst dann den Merge durch.
 
-Falls sich noch nicht commitete Änderungen im `feature` Zweig befinden, die nicht mit gemerged werden sollen, müssen diese voher mit `git stash` *versteckt* werden. Später können sie mit `git stash pop` wieder zurückgeholt werden.
+Falls sich noch nicht commitete Änderungen im `feature` Zweig befinden, die nicht mit gemerged werden sollen, müssen diese voher mit `git stash` *versteckt* werden. Später können sie mit `git stash pop` wieder zurückgeholt werden. Gibt es Änderungen die einfach verworfen werden sollen, können diese mit `git checkout -- .` auf den letzten Commit zurückgesetzt werden.
 
 Zuerst der rebase. Auf der `feature` branch wird dazu folgender Befehl ausgeführt. `origin` ist hierbei das remote, welches die master-branch enthält in welche germerged werden soll.
 
@@ -43,6 +43,8 @@ Treten nun Konflikte auf müssen diese zuerst beseitigt werden. Dazu die Hinweis
     # noch mal schnell dafür sorgen, dass master auch wirklich auf dem Stand des remotes ist
     git pull
     git merge feature
+    # nun den merge auch noch auf den Server pushen
+    git push origin master
     
 Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun gelöscht werden (s.u.)
 
