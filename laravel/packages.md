@@ -18,6 +18,7 @@
 - [Laravel Backup](https://github.com/spatie/laravel-backup), creates backup zip of whole application
 - [Model Caching for Laravel](https://github.com/GeneaLabs/laravel-model-caching)
 - [No Captcha](https://github.com/anhskohbo/no-captcha), Google ReCaptcha v2
+- [Regex](https://github.com/spatie/regex), better handling of regular expression than the built-ins.
 - [laravel-activitylog](https://github.com/spatie/laravel-activitylog), Log activity inside your Laravel app
 - [laravel-translatable](https://github.com/spatie/laravel-translatable), Making Eloquent models translatable
 - [eloquent-sortable](https://github.com/spatie/eloquent-sortable), Sortable behaviour for Eloquent models
@@ -39,3 +40,4 @@
 - [Laravel Strife Webhooks](https://github.com/spatie/laravel-stripe-webhooks), Handle Stripe webhooks in a Laravel application
 - [Under Construction](https://github.com/larsjanssen6/underconstruction), display Under Construction notice unless you know the code
 - [A Blog](https://github.com/spatie/murze.be), Freek Murzes blog
+- [Async](https://github.com/spatie/async), Library for asynchronous and parallel processing
