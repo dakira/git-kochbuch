@@ -2,6 +2,7 @@
 
 - [Git](git/git.md)
 - Laravel
+  - [General Tips](laravel/general.md)
   - [Good Packages](laravel/packages.md)
   - [Testing](laravel/laravel_testing.md)
 - Tooling
