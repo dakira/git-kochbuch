@@ -39,6 +39,7 @@
 - [Laravel Hashid](https://github.com/ElfSundae/laravel-hashid), Obfuscate your data by generating reversible, non-sequential, URL-safe identifiers.
 - [Laravel FakeID](https://github.com/Propaganistas/Laravel-FakeId), Enables automatic Eloquent model ID obfuscation in routes using Optimus.
 - [laravel-binary-uuid](https://github.com/spatie/laravel-binary-uuid), Using optimised binary UUIDs in Laravel
+- [Laravel/Lumen Soft Cascade Delete & Restore](https://github.com/Askedio/laravel-soft-cascade), cascading softdeletes
 - [laravel-feed](https://github.com/spatie/laravel-feed), Easily generate RSS feeds
 - [Laravel Strife Webhooks](https://github.com/spatie/laravel-stripe-webhooks), Handle Stripe webhooks in a Laravel application
 - [Under Construction](https://github.com/larsjanssen6/underconstruction), display Under Construction notice unless you know the code
