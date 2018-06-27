@@ -13,6 +13,7 @@
 
 - [Bouncer](https://github.com/JosephSilber/bouncer), Bouncer is an elegant, framework-agnostic approach to managing roles and abilities for any app using Eloquent models.
 - [Laravel User Verification](https://github.com/jrean/laravel-user-verification), generate verification emails/tokens
+- [Laravel Confirm Email](https://github.com/beyondcode/laravel-confirm-email), Add email verification to your Laravel projects
 - [Pwned Passwords Validator for Laravel](https://github.com/valorin/pwned-validator), The Pwned Password validator checks the user's submitted password (in a registration or password change form) with the awesome [HIBP Pwned](https://haveibeenpwned.com/Passwords) Passwords service to see if it is a known pwned password.
 - [Eloquent Sluggable](https://github.com/cviebrock/eloquent-sluggable), generate slugs for models
 - [Laravel Sluggable](https://github.com/spatie/laravel-sluggable), An opinionated package to create slugs for Eloquent models
@@ -47,3 +48,4 @@
 - [Async](https://github.com/spatie/async), Library for asynchronous and parallel processing
 - [Purgecss wrapper for Laravel Mix](https://github.com/spatie/laravel-mix-purgecss), removes all unused CSS in production
 - [Laravel Excel](https://github.com/Maatwebsite/Laravel-Excel), Excel and CSV export/import for Laravel
+- [Tenancy](https://laravel-tenancy.com), Tenancy allows you to easily scaffold a multi-tenant SaaS platform on top of the Laravel framework.
