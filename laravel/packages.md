@@ -49,3 +49,4 @@
 - [Purgecss wrapper for Laravel Mix](https://github.com/spatie/laravel-mix-purgecss), removes all unused CSS in production
 - [Laravel Excel](https://github.com/Maatwebsite/Laravel-Excel), Excel and CSV export/import for Laravel
 - [Tenancy](https://laravel-tenancy.com), Tenancy allows you to easily scaffold a multi-tenant SaaS platform on top of the Laravel framework.
+- [Tailwindo](https://github.com/awssat/tailwindo), Convert Bootstrap CSS code to Tailwind CSS code
