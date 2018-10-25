@@ -7,11 +7,21 @@
 - [Html Menu Generator for Laravel](https://github.com/spatie/laravel-menu), generate menus with options to automatically highlight active menu entry
 - [Laravel HTML](https://github.com/spatie/laravel-html), Painless html generation (replaces old HTML and FORM helpers)
 - [Laravel Medialibrary](https://github.com/spatie/laravel-medialibrary), Associate files with Eloquent models
-- [Laravel Permissions](https://github.com/spatie/laravel-permission), Associate users with roles and permissions
+- [Bouncer](https://github.com/JosephSilber/bouncer), Bouncer is an elegant, framework-agnostic approach to managing roles and abilities for any app using Eloquent models.
+
+## Tooling
+
+- [Laravel Self-Diagnosis](https://github.com/beyondcode/laravel-self-diagnosis)
+- [Laravel Dump Server](https://github.com/beyondcode/laravel-dump-server), allows usage of Symfony dump server in Laravel
+- [Xray - Take a look into your Laravel views](https://github.com/beyondcode/laravel-view-xray), When your Laravel project grows, so do the Laravel views. Sometimes it might be hard to figure out, which part of the output HTML was rendered using which template. With this package, you can take a peek into your Laravel views and find out which template is responsible for which part of the output HTML.
+- [Server Monitor](https://github.com/spatie/laravel-server-monitor), monitor server health and notify on problems.
+- [Uptime Monitor](https://github.com/spatie/laravel-uptime-monitor), monitor domain and certificate health and notify on problems.
+- [Mixed Content Scanner](https://github.com/spatie/mixed-content-scanner), scans https-enabled site for non https-secured content
+- [Tailwindo](https://github.com/awssat/tailwindo), Convert Bootstrap CSS code to Tailwind CSS code
 
 ## Other great packages
 
-- [Bouncer](https://github.com/JosephSilber/bouncer), Bouncer is an elegant, framework-agnostic approach to managing roles and abilities for any app using Eloquent models.
+- [Laravel Permissions](https://github.com/spatie/laravel-permission), Associate users with roles and permissions
 - [Laravel User Verification](https://github.com/jrean/laravel-user-verification), generate verification emails/tokens
 - [Laravel Confirm Email](https://github.com/beyondcode/laravel-confirm-email), Add email verification to your Laravel projects
 - [Pwned Passwords Validator for Laravel](https://github.com/valorin/pwned-validator), The Pwned Password validator checks the user's submitted password (in a registration or password change form) with the awesome [HIBP Pwned](https://haveibeenpwned.com/Passwords) Passwords service to see if it is a known pwned password.
@@ -27,9 +37,6 @@
 - [laravel-model-status](https://github.com/spatie/laravel-model-status), allows models to have a status and log history of status changes
 - [laravel-fractal](https://github.com/spatie/laravel-fractal), helps prepare data to build APIs (i.e. get it in the right format). Laravel 5.5 has this [out of the box](https://laravel.com/docs/5.5/eloquent-resources)
 - [Laravel Tags](https://github.com/spatie/laravel-tags), Add tags and taggable behaviour to your Laravel app
-- [Server Monitor](https://github.com/spatie/laravel-server-monitor), monitor server health and notify on problems.
-- [Uptime Monitor](https://github.com/spatie/laravel-uptime-monitor), monitor domain and certificate health and notify on problems.
-- [Mixed Content Scanner](https://github.com/spatie/mixed-content-scanner), scans https-enabled site for non https-secured content
 - [Laravel Cookie Consent](https://github.com/spatie/laravel-cookie-consent), Make your Laravel app comply with the crazy EU cookie law
 - [laravel-blade-javascript](https://github.com/spatie/laravel-blade-javascript), A Blade directive to export variables to JavaScript
 - [Ziggy](https://github.com/tightenco/ziggy), Use your Laravel Named Routes inside JavaScript
@@ -44,9 +51,17 @@
 - [laravel-feed](https://github.com/spatie/laravel-feed), Easily generate RSS feeds
 - [Laravel Strife Webhooks](https://github.com/spatie/laravel-stripe-webhooks), Handle Stripe webhooks in a Laravel application
 - [Under Construction](https://github.com/larsjanssen6/underconstruction), display Under Construction notice unless you know the code
-- [A Blog](https://github.com/spatie/murze.be), Freek Murzes blog
 - [Async](https://github.com/spatie/async), Library for asynchronous and parallel processing
 - [Purgecss wrapper for Laravel Mix](https://github.com/spatie/laravel-mix-purgecss), removes all unused CSS in production
 - [Laravel Excel](https://github.com/Maatwebsite/Laravel-Excel), Excel and CSV export/import for Laravel
 - [Tenancy](https://laravel-tenancy.com), Tenancy allows you to easily scaffold a multi-tenant SaaS platform on top of the Laravel framework.
-- [Tailwindo](https://github.com/awssat/tailwindo), Convert Bootstrap CSS code to Tailwind CSS code
+
+## Full Apps
+
+- [A Blog](https://github.com/spatie/murze.be), Freek Murzes blog
+- [Blender](https://github.com/spatie/blender), a Laravel CMS template
+- [LaRecipe](https://github.com/saleem-hadad/larecipe), Write gorgeous documentations for your products using Markdown inside your Laravel app.
+
+## Javascript
+
+- [tiptap](https://github.com/heyscrumpy/tiptap), a renderless VueJS text editor
