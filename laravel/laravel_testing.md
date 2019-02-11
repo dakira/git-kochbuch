@@ -16,3 +16,7 @@ public function progressTime(int $minutes)
     return $this;
 }
 ```
+
+## Disable Mass Assignment Exceptions
+
+Add `Model::unguard()` to the boot() method of the AppServiceProvider.
