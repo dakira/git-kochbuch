@@ -26,3 +26,21 @@ replace the regenerateId() function with this:
     }
 
 See [this issue](https://github.com/magento/magento2/commit/aaa60b1b72bdc189b38492bd50b0ffb23101173e?diff=split) for reference.
+
+## Upgrade Magento
+
+https://devdocs.magento.com/guides/v2.3/comp-mgr/cli/cli-upgrade.html
+
+```
+bin/magento maintenance:enable
+composer require magento/product-community-edition 2.3.2 --no-update;
+composer update;
+rm -rf pub/static/* var/view_preprocessed/* var/cache/* var/di var/generation
+redis-cli flushall
+bin/magento cache:clean;
+bin/magento cache:flush;
+bin/magento setup:upgrade;
+bin/magento setup:di:compile;
+bin/magento indexer:reindex;
+bin/magento maintenance:disable;
+```
