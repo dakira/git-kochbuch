@@ -36,7 +36,7 @@ bin/magento maintenance:enable
 composer require magento/product-community-edition 2.3.2 --no-update;
 composer update;
 rm -rf pub/static/* var/view_preprocessed/* var/cache/* var/di var/generation
-redis-cli flushall
+redis-cli -n <db_number> FLUSHDB # as defined in env.php
 bin/magento cache:clean;
 bin/magento cache:flush;
 bin/magento setup:upgrade;
