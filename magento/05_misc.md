@@ -37,10 +37,11 @@ composer require magento/product-community-edition 2.3.2 --no-update;
 composer update;
 rm -rf pub/static/* var/view_preprocessed/* var/cache/* var/di var/generation
 redis-cli -n <db_number> FLUSHDB # as defined in env.php
-bin/magento cache:clean;
-bin/magento cache:flush;
-bin/magento setup:upgrade;
-bin/magento setup:di:compile;
-bin/magento indexer:reindex;
-bin/magento maintenance:disable;
+bin/magento cache:clean
+bin/magento cache:flush
+bin/magento setup:upgrade
+bin/magento setup:di:compile
+bin/magento indexer:reindex
+bin/magento setup:static-content:deploy de_DE en_US -f
+bin/magento maintenance:disable
 ```
