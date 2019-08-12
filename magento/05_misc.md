@@ -27,6 +27,16 @@ replace the regenerateId() function with this:
 
 See [this issue](https://github.com/magento/magento2/commit/aaa60b1b72bdc189b38492bd50b0ffb23101173e?diff=split) for reference.
 
+## Fix state defaulting to Niedersachsen
+
+1. In General Settings > State settings of the store, make the state mandatory for Germany
+2. flush the config cache
+3. Go to to Sales > Tax settings
+    Now (and only now), you see a default state and default zip code. Switch default state to asterisk (* / any) and empty default zip code
+4. Go back to General Settings > State settings, make state no longer mandatory (revert to what you had before)
+5. Flush the config cache once more.
+    Now, orders should no longer contain a state. It's not obvious (and again: I'm not sure about the culprit), but I hope this helps...
+
 ## Upgrade Magento
 
 https://devdocs.magento.com/guides/v2.3/comp-mgr/cli/cli-upgrade.html
