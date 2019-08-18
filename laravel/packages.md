@@ -21,7 +21,7 @@
 
 ## Other great packages
 
-- [Feature Flags for Laravel](https://github.com/ylsideas/feature-flags), A Laravel package for handling feature flags
+- [Feature Flags in Laravel](https://github.com/friendsofcat/laravel-feature-flag), A Laravel package for handling feature flags
 - [Laravel Permissions](https://github.com/spatie/laravel-permission), Associate users with roles and permissions
 - [Laravel User Verification](https://github.com/jrean/laravel-user-verification), generate verification emails/tokens
 - [Laravel Confirm Email](https://github.com/beyondcode/laravel-confirm-email), Add email verification to your Laravel projects
