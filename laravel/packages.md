@@ -18,10 +18,20 @@
 - [Uptime Monitor](https://github.com/spatie/laravel-uptime-monitor), monitor domain and certificate health and notify on problems.
 - [Mixed Content Scanner](https://github.com/spatie/mixed-content-scanner), scans https-enabled site for non https-secured content
 - [Tailwindo](https://github.com/awssat/tailwindo), Convert Bootstrap CSS code to Tailwind CSS code
+- [LaravelCollective Errors](https://github.com/LaravelCollective/errors), the old nice looking error pages
+- [Laravel Package Boilerplate](https://laravelpackageboilerplate.com/)
+
+## Numbers, Money, Intl
+
+- [Money](https://github.com/moneyphp/money), PHP library to make working with money safer, easier, and fun!
+- [addressing](https://github.com/commerceguys/addressing), library for international addressing
+- [intl](https://github.com/commerceguys/intl), A PHP internationalization library, powered by CLDR data (formats numbers, currencies and languages)
+- [tax](https://github.com/commerceguys/tax), a library for tax calculations
 
 ## Other great packages
 
 - [Feature Flags in Laravel](https://github.com/friendsofcat/laravel-feature-flag), A Laravel package for handling feature flags
+- [Adding state behaviour to Eloquent models](https://github.com/spatie/laravel-model-states), This package adds state support to models. It combines concepts from the state pattern and state machines ([more info](https://laravel-news.com/laravel-model-states))
 - [Laravel Permissions](https://github.com/spatie/laravel-permission), Associate users with roles and permissions
 - [Laravel User Verification](https://github.com/jrean/laravel-user-verification), generate verification emails/tokens
 - [Laravel Confirm Email](https://github.com/beyondcode/laravel-confirm-email), Add email verification to your Laravel projects
@@ -55,7 +65,12 @@
 - [Async](https://github.com/spatie/async), Library for asynchronous and parallel processing
 - [Purgecss wrapper for Laravel Mix](https://github.com/spatie/laravel-mix-purgecss), removes all unused CSS in production
 - [Laravel Excel](https://github.com/Maatwebsite/Laravel-Excel), Excel and CSV export/import for Laravel
+- [Read and write simple Excel and CSV files](https://github.com/spatie/simple-excel), This package allows you to easily read and write simple Excel and CSV files. Behind the scenes generators are used to ensure low memory usage, even when working with large files.
 - [Tenancy](https://laravel-tenancy.com), Tenancy allows you to easily scaffold a multi-tenant SaaS platform on top of the Laravel framework.
+- [ClamAV Virus Validator For Laravel](https://github.com/sunspikes/clamav-validator), A custom Laravel virus validator based on ClamAV anti-virus scanner for file uploads
+- [Laravel Honetpot](https://github.com/spatie/laravel-honeypot), Preventing spam submitted through forms
+- [Laravel Stats Tracker](https://github.com/antonioribeiro/tracker), Tracker gathers a lot of information from your requests to identify and store
+
 
 ## Full Apps
 
@@ -66,3 +81,9 @@
 ## Javascript
 
 - [tiptap](https://github.com/heyscrumpy/tiptap), a renderless VueJS text editor
+- [filepond](https://pqina.nl/filepond/), A JavaScript library that can upload anything you throw at it, optimizes images for faster uploads, and offers a great, accessible, silky smooth user experience.
+- [doka](https://pqina.nl/doka/), High-performance JavaScript image editing in the browser
+- [Flickity](https://flickity.metafizzy.co/), Touch, responsive, flickable carousels
+- [GlideJS](https://glidejs.com/), JS carousel
+- [Vue Storefront](https://www.vuestorefront.io/)
+- [VueJS Form Backend-Validation](https://github.com/spatie/form-backend-validation)
