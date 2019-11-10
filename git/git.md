@@ -1,24 +1,17 @@
-
-
 # Unsortierte Git Tips
 
 ## Remotes
 
-Remotes sind *entfernte* Quellen für ein Repository. Es können zentrale Server sein, aber Versionen des Repositories von Kollegen im lokal Netz. Als einfachstes Beispiel kann man einen Klon von einem Github Repository nehmen. Da wird automatisch dieses Repository als **origin** Remote angelegt. Hierbei ist *origin* der konventionelle Name für das Repository vond em der eigene Code abstammt (und zu dem man i.d.R. seinen Code schickt). Eine weitere Konvention ist den Namen **upstream** für das Repository des Code-Besitzers zu hinterlegen.
+Remotes sind *entfernte* Quellen für ein Repository. Es können zentrale Server sein, oder Versionen des Repositories von Kollegen im lokal Netz. Als einfachstes Beispiel kann man einen Klon von einem Github Repository nehmen. Da wird automatisch dieses Repository als **origin** Remote angelegt. Hierbei ist *origin* der konventionelle Name für das Repository von dem der eigene Code abstammt (und zu dem man i.d.R. seinen Code schickt). Eine weitere Konvention ist den Namen **upstream** für das Repository des Code-Besitzers zu hinterlegen.
 
 > **Beispiel:** Man möchte an einem Opensource-Projekt mitarbeiten. Hierzu erstellt man einen Fork dieses Projektes, auf welchem man arbeitet. Dieser Fork ist aus der eigenen Sicht dann das *origin*-Remote wärend das eigentlich Repository des Projektes als *upstream*-Remote hinterlegt wird.
 
 - Remotes anzeigen
-
     `git remote -v`
-    
 - Remote hinzufügen (z.B.)
-
     `git remote add origin git@server.com/user/project.git`  
     `git remote add upstream git@server.com/owner/project.git`
-    
 - Remote entfernen
-
     `git remote rm upstream`
 
 ## Branches
@@ -45,7 +38,7 @@ Treten nun Konflikte auf müssen diese zuerst beseitigt werden. Dazu die Hinweis
     git merge feature
     # nun den merge auch noch auf den Server pushen
     git push origin master
-    
+
 Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun gelöscht werden (s.u.)
 
 ### Auf eine Branch wechseln, die Remote schon existiert
@@ -53,13 +46,13 @@ Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun gelöscht
 Das nennt sich im Git-Jargon auch *remote tracken*. Dazu gibt es bei git mehrere Wege, hier die kürzesten:
 
     git checkout --track <remote>/<remote_branch>
-    
+
 oder
 
     git fetch <remote> <remote_branch>:<local_branch> # z.B.
     git fetch upstream develop:develop
-    
-Mit dem ersten Befehl wird die Branch vom remote holt, eine gleichnamige lokale Branch erstellt, mit der remote Branch verbunden und zuletzt auf diese gewechselt. Der zweite Befehl macht das gleiche, aber ohne auf die Branch zu wechseln.
+
+Mit dem ersten Befehl wird die Branch vom remote geholt, eine gleichnamige lokale Branch erstellt, mit der remote Branch verbunden und zuletzt auf diese gewechselt. Der zweite Befehl macht das gleiche, aber ohne auf die Branch zu wechseln.
 
 ### Branches lokal und remote löschen
 
@@ -91,18 +84,18 @@ Mit `git clean -ndf` zeigt man sich alle Dateien und Ordner im aktuellen Verzeic
 Wenn Dateien und Ordner unter git-Kontrolle stehen und man möchte Änderungen ignorieren gibt es drei Möglichkeiten:
 
 1. Man behält die lokale Datei aber sie wird aus dem Repository entfernt.
-
+   
     `git rm --cached <datei>` oder  
     `git rm -r --cached <ordner>`
 
 2. Für Optimierung von großen Ordnern mit vielen Dateien (z.B. SDKs), die nie lokal verändert werden. Teilt git mit, dass es im genannten Ordner nicht nach Änderungen suchen braucht, da es keine geben wird.
-
+   
     `git update-index --assume-unchanged <pfad>`
 
 3. Sagt git, dass man seine eigene abweichende Version einer Datei oder eines Ordners behalten will. Praktisch für config files die sich und production/staging unterscheiden.
-
+   
     `git update-index --skip-worktree <path-name>`
-
+   
     Es ist wichtig zu wissen, dass Einstellungen, die man per `git update-index` **immer nur lokal** gesetzt werden. D.h. jeder Nutzer muss diese für sich selbst neu setzen.
 
 ## Die Geschichte neu schreiben
@@ -116,7 +109,7 @@ Gerade bei Opensource-Projekten wird man häufig gebeten einen Pull-Request auf 
     master  A-B-C
                  \
     dev   (A-B-C)-A1-B1
-    
+
 Dummerweise hat es nun auf dem Master-Zweig zwischendrin einige Veränderungen gegeben.
 
     master  A-B-C-D-E
@@ -136,7 +129,7 @@ Und nach einem Merge so:
 Das ganze klingt kompliziert, ist in der Praxis allerdings recht einfach. Will man bei einem Opensource-Projekt auf dem Master-Zweig des Upstream-Repositories rebases geht das z.B. so:
 
     git pull --rebase upstream master
-    
+
 Geht es um dem Master-Zweig des eigenen Projektes (weil z.B. Kollegen Änderungen an master durchgeführt haben) ersetzt man upstream durch origin (s. [Remotes](#remotes) weiter oben). Das obige ist die Kurzform des folgenden:
 
     git fetch origin
@@ -147,7 +140,7 @@ Geht es um dem Master-Zweig des eigenen Projektes (weil z.B. Kollegen Änderunge
 Für ein interaktives Rebase sucht man sich zuerst die Commit-ID des letzten Commits *vor* dem, den man noch mit bearbeiten möchte. Hat man insgesamt die Commits A, B, C, D, E und möchte D und E bearbeiten ist dies der Commit C. Man startet das interaktive Rebase über:
 
     git rebase -i <commit-id>
-    
+
 Git zeigt einem nun im Standard-Editor alle zu bearbeitenden Commits an. Diese kann man beliebig umsortieren (so lang sie nicht voneinander abhängen) und zusätzlich folgende Veränderungen an ihnen durchführen:
 
 - p, pick = Commit unverändert verwenden
@@ -180,19 +173,18 @@ Will man bei einem rebase die Signaturen behalten geht das so:
 Unterschiede anzeigen:
 
 - Zwischen dem aktuellen Arbeitsverzeichnis und dem letzten Commit.
-
+  
     `git diff`
-    
-- Zwischen dem aktuellen und dem letzten Commit.
 
+- Zwischen dem aktuellen und dem letzten Commit.
+  
     `git diff HEAD~ HEAD` oder  
     `git show`
-    
+
 - Zwischen zwei beliebigen Commits.
-
+  
     `git diff <commit_id1> <commit_id2>`
-    
-- Mit einem grafischen Programm
 
+- Mit einem grafischen Programm
+  
     `git difftool`
-    
