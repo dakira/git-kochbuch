@@ -79,6 +79,21 @@ Führt man stattdessen `git reset --hard HEAD~` aus, werden zusätzlich alle dur
 
 Mit `git clean -ndf` zeigt man sich alle Dateien und Ordner im aktuellen Verzeichnis an, die weder von git kontrolliert werden, noch in der *.gitignore* stehen. Das `-n` steht Unix-typisch für *dry-run*. Lässt man es weg werden die Dateien und Ordner tatsächlich gelöscht.
 
+### Undo, aber als neuer Commit AUF den ungewollten Commits
+
+Mit dem folgenden wird ein neuer Commit erstellt, der das Repository auf einen gewünschten alten Stand zurücksetzt. Dies ist nützlich bei einem öffentlich Repository, wo ein hard reset und force push nicht möglich ist.
+
+```
+# Reset the index and working tree to the desired tree
+# Ensure you have no uncommitted changes that you want to keep
+git reset --hard 56e05fced
+
+# Move the branch pointer back to the previous HEAD
+git reset --soft HEAD@{1}
+
+git commit -m "Revert to 56e05fced"
+```
+
 ## Getrackte Dateien *vergessen*
 
 Wenn Dateien und Ordner unter git-Kontrolle stehen und man möchte Änderungen ignorieren gibt es drei Möglichkeiten:
