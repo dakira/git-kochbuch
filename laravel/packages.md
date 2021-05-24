@@ -20,6 +20,7 @@
 - [Tailwindo](https://github.com/awssat/tailwindo), Convert Bootstrap CSS code to Tailwind CSS code
 - [LaravelCollective Errors](https://github.com/LaravelCollective/errors), the old nice looking error pages
 - [Laravel Package Boilerplate](https://laravelpackageboilerplate.com/)
+- [Envault](https://github.com/envault/envault), share and sync .env secrets across a team
 
 ## Numbers, Money, Intl
 
@@ -70,6 +71,7 @@
 - [ClamAV Virus Validator For Laravel](https://github.com/sunspikes/clamav-validator), A custom Laravel virus validator based on ClamAV anti-virus scanner for file uploads
 - [Laravel Honetpot](https://github.com/spatie/laravel-honeypot), Preventing spam submitted through forms
 - [Laravel Stats Tracker](https://github.com/antonioribeiro/tracker), Tracker gathers a lot of information from your requests to identify and store
+- [SOAP](https://github.com/ricorocks-Digital-Agency/soap), A Laravel SOAP client that provides a clean interface for handling requests and responses.
 
 
 ## Full Apps
