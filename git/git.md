@@ -1,10 +1,80 @@
-# Unsortierte Git Tips
+# Git Kochbuch
+Eine Liste von unsortierten git Tipps.
+
+## Inhalt
+
+- [Grundbefehle](#grundbefehle)
+- [Commits und ihre Nachrichten](#commits-und-ihre-nachrichten)
+- [Workflow](#workflow)
+- [Remotes](#remotes)
+- [Branches](#branches)
+    - [Neue Branches erstellen](#neue-branches-erstellen)
+    - [Eine feature Branch in master mergen](#eine-feature-branch-in-master-mergen)
+    - [Auf eine Branch wechseln, die Remote schon existiert](#auf-eine-branch-wechseln-die-remote-schon-existiert)
+    - [Branches lokal und remote löschen](#branches-lokal-und-remote-löschen)
+- [Undo](#undo)
+    - [git reset (einen Commit Rückgängig machen)](#git-reset-einen-commit-rückgängig-machen)
+    - [git clean (nicht getrackte Dateien löschen)](#git-clean-nicht-getrackte-dateien-löschen)
+    - [Undo als NEUER Commit AUF den ungewollten Commits](#undo-als-neuer-commit-auf-den-ungewollten-commits)
+- [Getrackte Dateien *vergessen*](#getrackte-dateien-vergessen)
+- [Die Geschichte neu schreiben](#die-geschichte-neu-schreiben)
+    - [Rebase to master](#rebase-to-master)
+    - [Rebase Interaktiv](#rebase-interaktiv)
+    - [Autoren eines einzelnen Commits ändern](#autoren-eines-einzelnen-commits-ändern)
+- [Signierte Commits](#signierte-commits)
+- [Diff](#diff)
+
+## Grundbefehle
+
+|Befehl|Beschreibung|
+|------|------------|
+| `git init .` | In aktuellem Ordner ein Git Repository initialisieren |
+| `git status` | Aktuellen Status des Repositories anzeigen |
+| `git add <folders/files>` | Ausgewählte Ordner und Dateien stagen |
+| `git add .` | Sämtliche Änderungen und neue Dateien stagen |
+| `git commit -m '<message>'` | Neuer Commit mit angegebener Nachricht |
+| `git push` | Änderungen an einen Server übertragen |
+| `git pull` | Änderungen von einem Server übertragen |
+    
+## Commits und ihre Nachrichten
+
+Commits sollten möglichst atomar sein und nur Änderungen zu einem Thema enthalten. Die Commit-Nachrichten sollten grundsätzlich folgende Kriterien erfüllen:
+
+- aussagekräftig
+- auf Englisch formuliert
+- im Präsenz gehalten
+
+> **Tipp**: Eine gute Commit-Nachricht vervollständigt den folgenden Satz: *When applied this commit will...*
+
+Beispiele:
+- Update dependencies
+- Implement AzureAD OIDC authentification
+- Fix security-problem in controllers
+
+Negativ-Beispiele:
+- fix stuff
+- my work from may
+- deleted some files
+
+## Workflow
+
+Es gibt unterschiedliche Workflows, wie man im Team (oder allein) mit Git arbeiten kann. Nutzt man eine zentrale Verwaltung wie Github oder Gitlab, empfiehlt sich z.B. der s.g. [Github-Flow](https://guides.github.com/introduction/flow/). Dieser geht davon aus, dass in der master bzw main Branch immer der aktuellste lauffähige Code liegt. Jede Entwicklung findet in Feature- oder Bugfix-Branches statt.
+
+1. Branch erstellen. Z.B. `fix-authentication-error` (s. [Branches](#branches))
+2. Commits in der Branch
+3. Pull-Request (Github) bzw Merge-Request (Gitlab) erstellen
+4. Im PR Code-Review, Diskussion und Anpassungen
+5. Code zum Test in Staging-System deployen
+6. PR in master/main mergen -> Deploy nach Production
+7. Feature-/Bug-Branch löschen
+
+Für ein konkreteres Beispiel s. [Opensource-Workflow](#opensource-workflow)
 
 ## Remotes
 
 Remotes sind *entfernte* Quellen für ein Repository. Es können zentrale Server sein, oder Versionen des Repositories von Kollegen im lokal Netz. Als einfachstes Beispiel kann man einen Klon von einem Github Repository nehmen. Da wird automatisch dieses Repository als **origin** Remote angelegt. Hierbei ist *origin* der konventionelle Name für das Repository von dem der eigene Code abstammt (und zu dem man i.d.R. seinen Code schickt). Eine weitere Konvention ist den Namen **upstream** für das Repository des Code-Besitzers zu hinterlegen.
 
-> **Beispiel:** Man möchte an einem Opensource-Projekt mitarbeiten. Hierzu erstellt man einen Fork dieses Projektes, auf welchem man arbeitet. Dieser Fork ist aus der eigenen Sicht dann das *origin*-Remote wärend das eigentlich Repository des Projektes als *upstream*-Remote hinterlegt wird.
+> **Beispiel:** Man möchte an einem Opensource-Projekt mitarbeiten. Hierzu erstellt man einen Fork dieses Projektes, auf welchem man arbeitet. Dieser Fork ist aus der eigenen Sicht dann das *origin*-Remote wärend das eigentliche Repository des Projektes als *upstream*-Remote hinterlegt wird.
 
 - Remotes anzeigen
     `git remote -v`
@@ -13,20 +83,23 @@ Remotes sind *entfernte* Quellen für ein Repository. Es können zentrale Server
     `git remote add upstream git@server.com/owner/project.git`
 - Remote entfernen
     `git remote rm upstream`
-
+    
 ## Branches
 
-### Eine `feature` Branch erstellen und direkt hineinwechseln
+### Neue Branches erstellen
 
-    git checkout -b feature
+|Befehl|Beschreibung|
+|------|------------|
+| `git branch new-feature` | Erstellt die Branch `new-feature` |
+| `git checkout -b new-feature` | Erstellt die Branch `new-feature` und wechselt hinein |
 
 ### Eine `feature` Branch in `master` mergen
 
 Hat man ein Feature so weit, dass es in den Master-Zweig übernommen werden soll, muss man ein Merge durchführen. Dazu bringt man die Branch erst mal auf den aktuellen Stand von master (s. *rebase to master*), beseitigt etwaige Konflikte und führt erst dann den Merge durch.
 
-Falls sich noch nicht commitete Änderungen im `feature` Zweig befinden, die nicht mit gemerged werden sollen, müssen diese voher mit `git stash` *versteckt* werden. Später können sie mit `git stash pop` wieder zurückgeholt werden. Gibt es Änderungen die einfach verworfen werden sollen, können diese mit `git checkout -- .` auf den letzten Commit zurückgesetzt werden.
+Falls sich noch nicht commitete Änderungen im `new-feature` Zweig befinden, die nicht mit gemerged werden sollen, müssen diese voher mit `git stash` *versteckt* werden. Später können sie mit `git stash pop` wieder zurückgeholt werden. Gibt es Änderungen die einfach verworfen werden sollen, können diese mit `git restore <folder/files>` auf den letzten Commit zurückgesetzt werden.
 
-Zuerst der rebase. Auf der `feature` branch wird dazu folgender Befehl ausgeführt. `origin` ist hierbei das remote, welches die master-branch enthält in welche germerged werden soll.
+Zuerst der Rebase: Auf der `feature` branch wird dazu folgender Befehl ausgeführt. `origin` ist hierbei das remote, welches die master-branch enthält in welche germerged werden soll.
 
     git pull --rebase origin master
 
@@ -39,7 +112,7 @@ Treten nun Konflikte auf müssen diese zuerst beseitigt werden. Dazu die Hinweis
     # nun den merge auch noch auf den Server pushen
     git push origin master
 
-Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun gelöscht werden (s.u.)
+Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun [gelöscht](#branches-lokal-und-remote-löschen) werden.
 
 ### Auf eine Branch wechseln, die Remote schon existiert
 
@@ -79,11 +152,11 @@ Führt man stattdessen `git reset --hard HEAD~` aus, werden zusätzlich alle dur
 
 Mit `git clean -ndf` zeigt man sich alle Dateien und Ordner im aktuellen Verzeichnis an, die weder von git kontrolliert werden, noch in der *.gitignore* stehen. Das `-n` steht Unix-typisch für *dry-run*. Lässt man es weg werden die Dateien und Ordner tatsächlich gelöscht.
 
-### Undo, aber als neuer Commit AUF den ungewollten Commits
+### Undo als NEUER Commit AUF den ungewollten Commits
 
 Mit dem folgenden wird ein neuer Commit erstellt, der das Repository auf einen gewünschten alten Stand zurücksetzt. Dies ist nützlich bei einem öffentlich Repository, wo ein hard reset und force push nicht möglich ist.
 
-```
+```bash
 # Reset the index and working tree to the desired tree
 # Ensure you have no uncommitted changes that you want to keep
 git reset --hard 56e05fced
@@ -150,7 +223,7 @@ Geht es um dem Master-Zweig des eigenen Projektes (weil z.B. Kollegen Änderunge
     git fetch origin
     git rebase origin/master
 
-### Interaktiv
+### Rebase Interaktiv
 
 Für ein interaktives Rebase sucht man sich zuerst die Commit-ID des letzten Commits *vor* dem, den man noch mit bearbeiten möchte. Hat man insgesamt die Commits A, B, C, D, E und möchte D und E bearbeiten ist dies der Commit C. Man startet das interaktive Rebase über:
 
