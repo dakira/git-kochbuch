@@ -23,6 +23,8 @@ Eine Liste von unsortierten git Tipps.
     - [Autoren eines einzelnen Commits ändern](#autoren-eines-einzelnen-commits-ändern)
 - [Signierte Commits](#signierte-commits)
 - [Diff](#diff)
+- [Beispiele](#beispiele)
+    - [Opensource Workflow](#opensource-workflow)
 
 ## Grundbefehle
 
@@ -35,6 +37,7 @@ Eine Liste von unsortierten git Tipps.
 | `git commit -m '<message>'` | Neuer Commit mit angegebener Nachricht |
 | `git push` | Änderungen an einen Server übertragen |
 | `git pull` | Änderungen von einem Server übertragen |
+| `git checkout <branchname>` | In einen anderen branch wechseln |
     
 ## Commits und ihre Nachrichten
 
@@ -61,14 +64,16 @@ Negativ-Beispiele:
 Es gibt unterschiedliche Workflows, wie man im Team (oder allein) mit Git arbeiten kann. Nutzt man eine zentrale Verwaltung wie Github oder Gitlab, empfiehlt sich z.B. der s.g. [Github-Flow](https://guides.github.com/introduction/flow/). Dieser geht davon aus, dass in der master bzw main Branch immer der aktuellste lauffähige Code liegt. Jede Entwicklung findet in Feature- oder Bugfix-Branches statt.
 
 1. Branch erstellen. Z.B. `fix-authentication-error` (s. [Branches](#branches))
-2. Commits in der Branch
+2. Commits in dem Branch machen (und auf den server pushen)
 3. Pull-Request (Github) bzw Merge-Request (Gitlab) erstellen
-4. Im PR Code-Review, Diskussion und Anpassungen
-5. Code zum Test in Staging-System deployen
+4. Im PR/MR Code-Review, Diskussion und Anpassungen
+5. Code im PR/MR testen (CI/CD und/oder manuell)
 6. PR in master/main mergen -> Deploy nach Production
 7. Feature-/Bug-Branch löschen
 
-Für ein konkreteres Beispiel s. [Opensource-Workflow](#opensource-workflow)
+Für ein konkreteres Beispiel s. [Opensource Workflow](#opensource-workflow)
+
+Eine Erweiterung des Github-Flow ist der [Gitlab-Flow](https://docs.gitlab.com/ee/topics/gitlab_flow.html), welcher das Konzept um Environment-Branches erweitert (staging, production, usw.). Das ist dann sinnvoll, wenn aus Merges in bestimmte Branches ein Deployment getriggert werden soll.
 
 ## Remotes
 
@@ -193,42 +198,47 @@ So lang man Commits nur lokal getätigt hat und nicht auf einen Server gepusht h
 ### Rebase to master
 
 Gerade bei Opensource-Projekten wird man häufig gebeten einen Pull-Request auf master zu basieren (*rebase to master*). Zur Veranschaulichung stelle man sich vor man hat einen Dev-Zweig vom Master-Zweig bei Commit C gebrancht und auf diesem Dev-Zweig zwei Commits getätigt, die nun per Pull-Request wieder ein den Master-Zweig gemerged werden sollen.
-
-    master  A-B-C
-                 \
-    dev   (A-B-C)-A1-B1
+```
+master  A-B-C
+             \
+dev   (A-B-C)-A1-B1
+```
 
 Dummerweise hat es nun auf dem Master-Zweig zwischendrin einige Veränderungen gegeben.
-
-    master  A-B-C-D-E
-                 \
-    dev          A1-B1
+```
+master  A-B-C-D-E
+             \
+dev          A1-B1
+```
 
 Ein Merge unserer zwei Commits würde dadurch tatsächlich zu drei Commits führen. Einem *"Merge-Commit"*, bei dem etwaige Komflikte behoben werden (oder auch nicht, falls unnötig) und den beiden tatsächlichen Commits. Die meisten Maintainer bevorzugen s.g. *fast-forward* Merges, bei denen nur die getätigten Commits an den Master-Zeig angehängt werden und ein Merge-Commit nicht nötig ist. Dies erreicht man in unserem Fall über ein *rebase to master*. Dazu wird unser Zweig auf Commit C zurückgespult, es werden die Commits D und E von master aufgespielt und darauf unsere eigenen Commits A1 und B1 wieder aufgespielt. Kommt es zu Konflikten hält das rebase an, wirft einen in eine Shell und erlaubt einem (unter Anleitung) die Konflikte zu beheben. Das Resultat sieht so aus:
 
-    master  A-B-C-D-E
-                     \
-    dev              A1-B1
-
+```
+master  A-B-C-D-E
+                 \
+dev              A1-B1
+```
 Und nach einem Merge so:
-
-    master  A-B-C-D-E-A1-B1
-
+```
+master  A-B-C-D-E-A1-B1
+```
 Das ganze klingt kompliziert, ist in der Praxis allerdings recht einfach. Will man bei einem Opensource-Projekt auf dem Master-Zweig des Upstream-Repositories rebases geht das z.B. so:
-
-    git pull --rebase upstream master
+```
+git pull --rebase upstream master
+```
 
 Geht es um dem Master-Zweig des eigenen Projektes (weil z.B. Kollegen Änderungen an master durchgeführt haben) ersetzt man upstream durch origin (s. [Remotes](#remotes) weiter oben). Das obige ist die Kurzform des folgenden:
-
-    git fetch origin
-    git rebase origin/master
+```
+git fetch origin
+git rebase origin/master
+```
 
 ### Rebase Interaktiv
 
 Für ein interaktives Rebase sucht man sich zuerst die Commit-ID des letzten Commits *vor* dem, den man noch mit bearbeiten möchte. Hat man insgesamt die Commits A, B, C, D, E und möchte D und E bearbeiten ist dies der Commit C. Man startet das interaktive Rebase über:
-
-    git rebase -i <commit-id>
-
+```
+git rebase -i <commit-id>
+```
 Git zeigt einem nun im Standard-Editor alle zu bearbeitenden Commits an. Diese kann man beliebig umsortieren (so lang sie nicht voneinander abhängen) und zusätzlich folgende Veränderungen an ihnen durchführen:
 
 - p, pick = Commit unverändert verwenden
@@ -241,38 +251,62 @@ Git zeigt einem nun im Standard-Editor alle zu bearbeitenden Commits an. Diese k
 ### Autoren eines einzelnen Commits ändern
 
 Ein spezieller Anwendungsfall des rebase. Man markiert den entsprechenden Commit für ein edit und landet in der Shell. Dort kann mann mit
-
-    git commit --amend --no-edit --author="John Doe <doe@example.com>"
-
+```
+git commit --amend --no-edit --author="John Doe <doe@example.com>"
+```
 den Autoren neu setzen.
 
 ## Signierte Commits
 
 Man kann Commits mit GPG signieren:
-
-    git commit -S
-
+```
+git commit -S
+```
 Will man bei einem rebase die Signaturen behalten geht das so:
-
-    git rebase -i --gpg-sign=myemail@example.com <commit-id>
-
+```
+git rebase -i --gpg-sign=myemail@example.com <commit-id>
+```
 ## Diff
 
 Unterschiede anzeigen:
 
-- Zwischen dem aktuellen Arbeitsverzeichnis und dem letzten Commit.
-  
+- Zwischen dem aktuellen Arbeitsverzeichnis und dem letzten Commit.  
     `git diff`
-
 - Zwischen dem aktuellen und dem letzten Commit.
-  
     `git diff HEAD~ HEAD` oder  
     `git show`
-
 - Zwischen zwei beliebigen Commits.
-  
     `git diff <commit_id1> <commit_id2>`
-
 - Mit einem grafischen Programm
-  
     `git difftool`
+
+## Beispiele
+### Opensource Workflow
+
+Hier in Kürze, wie man zu einem Opensource-Projekt beiträgt:
+
+1. **Forken**
+    Auf bspw. Github kann man durch einen Fork eine Kopie des Projektes in seinem privaten Namespace erstellen. Auf dieser Kopie wird gearbeitet. Dazu klickt man i.d.R. im Webinterface einen Fork-Button.
+2. **Klonen und Remotes**
+    `git clone git@github.com:USERNAME/PROJECTNAME.git`  
+    Nun hinterlegt man noch die Original-Quelle als *remote*.  
+    `git remote add upstream git@github.com:PROJECT_USERNAME/PROJECTNAME.git`
+3. Branchen
+    Für den zu schreibenden Code erstellt man nun einen passenden Branch wie *fix-issue123* oder *add-contact-form*  
+    `git checkout -b BRANCH_NAME`
+4. **hack hack hack**
+    Nun arbeitet man am Code. Arbeitet man länger an einem Feature, lohnt es sich gelegentlich Änderung der Master-Branch des Upstream-Projekts zu mergen ([rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) auf master).  
+    `git pull --rebase upstream master`
+5. **Pull-Request**
+    Die fertige (oder auch unfertige) Arbeit pusht man nun in den eigenen Namespace und ertellt einen Pull-Request. Zuerst muss der Code gepusht werden.  
+    `git push origin BRANCH_NAME`  
+    Nun kann man im Web-Interface einen PR erstellen.
+6. **Warten und fixen**
+    In der Regel wünschen sich Maintainer noch Änderungen. Um den PR zu verändern muss man einfach nur im gleichen Branch commiten und pushen. Oft verlangt der Maintainer noch mal einen [rebase to master](#rebase-to-master) (s.o.).
+7. **Aufräumen**
+    Wenn der Pull-Request angenommen (oder abgelehnt) wurde, kann man die lokale und die remote Branch löschen:  
+    ```
+    git checkout master
+    git branch -D BRANCH_NAME
+    git push origin --delete BRANCH_NAME
+    ```
