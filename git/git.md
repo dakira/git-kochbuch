@@ -100,15 +100,15 @@ Remotes sind *entfernte* Quellen für ein Repository. Es können zentrale Server
 
 ### Eine `feature` Branch in `master` mergen
 
-Hat man ein Feature so weit, dass es in den Master-Zweig übernommen werden soll, muss man ein Merge durchführen. Dazu bringt man die Branch erst mal auf den aktuellen Stand von master (s. *rebase to master*), beseitigt etwaige Konflikte und führt erst dann den Merge durch.
+Hat man ein Feature so weit, dass es in den Master-Zweig übernommen werden soll, muss man ein Merge durchführen. Dazu bringt man die Branch erst mal auf den aktuellen Stand von master (s. [Rebase to master](#rebase-to-master)), beseitigt etwaige Konflikte und führt erst dann den Merge durch.
 
-Falls sich noch nicht commitete Änderungen im `new-feature` Zweig befinden, die nicht mit gemerged werden sollen, müssen diese voher mit `git stash` *versteckt* werden. Später können sie mit `git stash pop` wieder zurückgeholt werden. Gibt es Änderungen die einfach verworfen werden sollen, können diese mit `git restore <folder/files>` auf den letzten Commit zurückgesetzt werden.
+Falls sich noch nicht commitete Änderungen im `feature` Zweig befinden, die nicht mit gemerged werden sollen, müssen diese voher mit `git stash` *versteckt* werden. Später können sie mit `git stash pop` wieder zurückgeholt werden. Gibt es Änderungen die einfach verworfen werden sollen, können diese mit `git restore <folder/files>` auf den letzten Commit zurückgesetzt werden.
 
 Zuerst der Rebase: Auf der `feature` branch wird dazu folgender Befehl ausgeführt. `origin` ist hierbei das remote, welches die master-branch enthält in welche germerged werden soll.
 
     git pull --rebase origin master
 
-Treten nun Konflikte auf müssen diese zuerst beseitigt werden. Dazu die Hinweise von `git status` befolgen. Nun folgt der Merge:
+Treten nun [Konflikte](#konflikte-ours-und-theirs) auf müssen diese zuerst beseitigt werden. Dazu die Hinweise von `git status` befolgen. Nun folgt der Merge:
 
     git checkout master
     # noch mal schnell dafür sorgen, dass master auch wirklich auf dem Stand des remotes ist
@@ -120,6 +120,8 @@ Treten nun Konflikte auf müssen diese zuerst beseitigt werden. Dazu die Hinweis
 Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun [gelöscht](#branches-lokal-und-remote-löschen) werden.
 
 ### Auf eine Branch wechseln, die Remote schon existiert
+
+> **Hinweis**: In aktuellen Git-Versionen wird bei einem checkout geprüft, ob eine Branch remote existiert und man muss nichts weiter machen als `git checkout <branch name>`
 
 Das nennt sich im Git-Jargon auch *remote tracken*. Dazu gibt es bei git mehrere Wege, hier die kürzesten:
 
@@ -139,6 +141,31 @@ Braucht man eine Branch nicht mehr, weil ihr inhalt z.B. in master gemerged wurd
     git branch -d <branch>    # löscht die Branch *nur* wenn der Inhalt gemerged wurde oder anderswo existiert
     git branch -D <branch>    # löscht die Branch in jedem Fall
     git push origin :<branch> # löscht die remote Branch
+    
+### Konflikte: Ours und Theirs
+
+Bei unterschiedlichen Git-Aktionen wie Merge und Rebase kann es zu Konflikten kommen, wenn z.B. in beiden Versionen an der gleichen Datei gearbeitet wurde. Zum Auflösen der Konflikte können die betroffenen Dateien von Hand bearbeitet werden und die Konflikt-Kommentare entfernt werden, um dann den Merge oder Rebase fortzusetzen.
+
+Manchmal will man aber auch einfach nur die eine oder die andere Version übernehmen. Z.B.
+
+```bash
+git checkout --ours -- path/to/some/dir
+# oder
+git checkout --theirs -- path/to/some/file
+```
+
+Aber was ist nun *ours* oder *theirs*, master oder feature? Die folgende Tabelle zeigt das für die möglichen Konfliktfälle in einer groben Vereinfachung.
+
+| Operation | Ours | Theirs |
+|-----------|------|--------|
+| <pre lang="bash">git checkout master<br>git merge feature</pre> | master | feature |
+| <pre lang="bash">git checkout feature<br>git rebase master</pre> | master | feature |
+| <pre lang="bash">git checkout feature<br>git cherry-pick commit-id</pre> | feature | commit-id |
+| <pre lang="bash">git checkout feature<br>git revert commit-id</pre> | feature | invers von commit-id |
+
+*Ours* ist grob immer der HEAD der Branch, auf der die Operation ausgeführt wird. Bei einem Merge, die Branch, in welche hineingemerged wird. Bei Cherry-Picking ist es die Branch, auf welche ein einzelner Commit gesetzt werden soll.
+
+Bei einem Rebase ist es komplizierter: Bei einem rebase auf master befindet man sich zwar auf einer Feature-Branch, die Operation wird aber *auf master* bzw dem HEAD-Commit von Master ausgeführt (und auch das ist noch eine Vereinfachung). Für weiterführende Erklärungen und Konfliktlösungsstrategien empfiehlt sich [Who is “us” and who is “them” according to Git?](https://stackoverflow.com/a/63911630/1501491) auf Stackoverflow.
 
 ## Undo
 
@@ -211,7 +238,7 @@ master  A-B-C-D-E
 dev          A1-B1
 ```
 
-Ein Merge unserer zwei Commits würde dadurch tatsächlich zu drei Commits führen. Einem *"Merge-Commit"*, bei dem etwaige Komflikte behoben werden (oder auch nicht, falls unnötig) und den beiden tatsächlichen Commits. Die meisten Maintainer bevorzugen s.g. *fast-forward* Merges, bei denen nur die getätigten Commits an den Master-Zeig angehängt werden und ein Merge-Commit nicht nötig ist. Dies erreicht man in unserem Fall über ein *rebase to master*. Dazu wird unser Zweig auf Commit C zurückgespult, es werden die Commits D und E von master aufgespielt und darauf unsere eigenen Commits A1 und B1 wieder aufgespielt. Kommt es zu Konflikten hält das rebase an, wirft einen in eine Shell und erlaubt einem (unter Anleitung) die Konflikte zu beheben. Das Resultat sieht so aus:
+Ein Merge unserer zwei Commits würde dadurch tatsächlich zu drei Commits führen. Einem *"Merge-Commit"*, bei dem etwaige Komflikte behoben werden (oder auch nicht, falls unnötig) und den beiden tatsächlichen Commits. Die meisten Maintainer bevorzugen s.g. *fast-forward* Merges, bei denen nur die getätigten Commits an den Master-Zeig angehängt werden und ein Merge-Commit nicht nötig ist. Dies erreicht man in unserem Fall über ein *rebase to master*. Dazu wird unser Zweig auf den Stand von master gesetzt (Commit E). Dann werden per Cherry-Picking die Commits A1 und B1 wieder eingespielt. Kommt es zu Konflikten hält das rebase an, wirft einen in eine Shell und erlaubt einem (unter Anleitung) die Konflikte zu beheben. Das Resultat sieht so aus:
 
 ```
 master  A-B-C-D-E
@@ -222,15 +249,15 @@ Und nach einem Merge so:
 ```
 master  A-B-C-D-E-A1-B1
 ```
-Das ganze klingt kompliziert, ist in der Praxis allerdings recht einfach. Will man bei einem Opensource-Projekt auf dem Master-Zweig des Upstream-Repositories rebases geht das z.B. so:
+Das ganze klingt kompliziert, ist in der Praxis allerdings recht einfach. Will man bei einem Opensource-Projekt eine feature-branch auf den Master-Zweig des Upstream-Repositories rebasen geht das z.B. so:
 ```
 git pull --rebase upstream master
 ```
 
 Geht es um dem Master-Zweig des eigenen Projektes (weil z.B. Kollegen Änderungen an master durchgeführt haben) ersetzt man upstream durch origin (s. [Remotes](#remotes) weiter oben). Das obige ist die Kurzform des folgenden:
 ```
-git fetch origin
-git rebase origin/master
+git fetch upstream
+git rebase upstream/master
 ```
 
 ### Rebase Interaktiv
