@@ -12,8 +12,10 @@ Eine Liste von unsortierten git Tipps.
     - [Eine feature Branch in master mergen](#eine-feature-branch-in-master-mergen)
     - [Auf eine Branch wechseln, die Remote schon existiert](#auf-eine-branch-wechseln-die-remote-schon-existiert)
     - [Branches lokal und remote löschen](#branches-lokal-und-remote-löschen)
+    - [Konflikte: Ours und Theirs](#konflikte-ours-und-theirs)
 - [Undo](#undo)
-    - [git reset (einen Commit Rückgängig machen)](#git-reset-einen-commit-rückgängig-machen)
+    - [git revert (einen einzelnen Commit rückgängig machen)](#git-revert-einen-einzelnen-commit-rückgängig-machen)
+    - [git reset (auf einen Commit zurückspringen)](#git-reset-auf-einen-commit-zurückspringen)
     - [git clean (nicht getrackte Dateien löschen)](#git-clean-nicht-getrackte-dateien-löschen)
     - [Undo als NEUER Commit AUF den ungewollten Commits](#undo-als-neuer-commit-auf-den-ungewollten-commits)
 - [Getrackte Dateien *vergessen*](#getrackte-dateien-vergessen)
@@ -38,7 +40,7 @@ Eine Liste von unsortierten git Tipps.
 | `git push` | Änderungen an einen Server übertragen |
 | `git pull` | Änderungen von einem Server übertragen |
 | `git checkout <branchname>` | In einen anderen branch wechseln |
-    
+
 ## Commits und ihre Nachrichten
 
 Commits sollten möglichst atomar sein und nur Änderungen zu einem Thema enthalten. Die Commit-Nachrichten sollten grundsätzlich folgende Kriterien erfüllen:
@@ -106,16 +108,18 @@ Falls sich noch nicht commitete Änderungen im `feature` Zweig befinden, die nic
 
 Zuerst der Rebase: Auf der `feature` branch wird dazu folgender Befehl ausgeführt. `origin` ist hierbei das remote, welches die master-branch enthält in welche germerged werden soll.
 
-    git pull --rebase origin master
+`git pull --rebase origin master`
 
 Treten nun [Konflikte](#konflikte-ours-und-theirs) auf müssen diese zuerst beseitigt werden. Dazu die Hinweise von `git status` befolgen. Nun folgt der Merge:
 
-    git checkout master
-    # noch mal schnell dafür sorgen, dass master auch wirklich auf dem Stand des remotes ist
-    git pull
-    git merge feature
-    # nun den merge auch noch auf den Server pushen
-    git push origin master
+```bash
+git checkout master
+# noch mal schnell dafür sorgen, dass master auch wirklich auf dem Stand des remotes ist
+git pull
+git merge feature
+# nun den merge auch noch auf den Server pushen
+git push origin master
+```
 
 Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun [gelöscht](#branches-lokal-und-remote-löschen) werden.
 
@@ -125,12 +129,14 @@ Es sollte ein fast-forward-Merge erfolgen. Die feature-branch kann nun [gelösch
 
 Das nennt sich im Git-Jargon auch *remote tracken*. Dazu gibt es bei git mehrere Wege, hier die kürzesten:
 
-    git checkout --track <remote>/<remote_branch>
+`git checkout --track <remote>/<remote_branch>`
 
 oder
 
-    git fetch <remote> <remote_branch>:<local_branch> # z.B.
-    git fetch upstream develop:develop
+```bash
+git fetch <remote> <remote_branch>:<local_branch> # z.B.
+git fetch upstream develop:develop
+```
 
 Mit dem ersten Befehl wird die Branch vom remote geholt, eine gleichnamige lokale Branch erstellt, mit der remote Branch verbunden und zuletzt auf diese gewechselt. Der zweite Befehl macht das gleiche, aber ohne auf die Branch zu wechseln.
 
@@ -138,10 +144,12 @@ Mit dem ersten Befehl wird die Branch vom remote geholt, eine gleichnamige lokal
 
 Braucht man eine Branch nicht mehr, weil ihr inhalt z.B. in master gemerged wurde, kann man sie löschen. Dies muss man mit zwei Befehlen für die lokale bzw. die remote Branch machen.
 
-    git branch -d <branch>    # löscht die Branch *nur* wenn der Inhalt gemerged wurde oder anderswo existiert
-    git branch -D <branch>    # löscht die Branch in jedem Fall
-    git push origin :<branch> # löscht die remote Branch
-    
+```bash
+git branch -d <branch>    # löscht die Branch *nur* wenn der Inhalt gemerged wurde oder anderswo existiert
+git branch -D <branch>    # löscht die Branch in jedem Fall
+git push origin :<branch> # löscht die remote Branch
+```
+
 ### Konflikte: Ours und Theirs
 
 Bei unterschiedlichen Git-Aktionen wie Merge und Rebase kann es zu Konflikten kommen, wenn z.B. in beiden Versionen an der gleichen Datei gearbeitet wurde. Zum Auflösen der Konflikte können die betroffenen Dateien von Hand bearbeitet werden und die Konflikt-Kommentare entfernt werden, um dann den Merge oder Rebase fortzusetzen.
@@ -169,16 +177,15 @@ Bei einem Rebase ist es komplizierter: Bei einem rebase auf master befindet man 
 
 ## Undo
 
-Manchmal will man etwas ausprobieren und wenn es nicht klappt schnell zurück zum vorherigen Stand. Vor der Arbeit legt man dazu einen s.g. *Work-In-Progress*-Commit an (als Speicherstand). Danach kann man zum *wegwerfen* der Arbeit einfach git resetten. Es ist besonders praktisch sich für diese beiden Befehle aliase anzulegen.
+### git revert (einen einzelnen Commit rückgängig machen)
 
-    alias wip="git add . && git commit -m 'wip'"  
-    alias nah="git reset --hard && git clean -df"
+Mit `git revert <commit-id>` kann man die Änderungen eines beliebigen Commits aus der History rückgängig machen (und zwar nur dieses Commits, alle anderen Änderungen seit dem Commit bleiben bestehen).
 
-### git reset (einen Commit Rückgängig machen)
+### git reset (auf einen Commit zurückspringen)
 
-Mit `git reset <commit-id>` kann man beliebig viele commits rückgängigmachen. `git reset HEAD~` macht den aktuellsten commit (*HEAD*) rückgängig und spring zum vorherigen (*HEAD~*). Dabei werden alle Änderungen, die der letzte Commit mit sich brachte behalten (es wird also nichts gelöscht).
+Mit `git reset <commit-id>` setzt man die aktuelle Branch auf den Stand von `<commit-id>`. `git reset HEAD~` spring zum vorherigen Commit (*HEAD~*). Bei einem reset bleiben alle Änderungen der durch den reset gelöschen Commits als nicht-committete Änderungen bestehen.
 
-Führt man stattdessen `git reset --hard HEAD~` aus, werden zusätzlich alle durch den letzten commit durchgeführten Veränderungen rückgängig gemacht.
+Führt man stattdessen `git reset --hard <commit-id>` aus, sind auch die Änderungen weg.
 
 ### git clean (nicht getrackte Dateien löschen)
 
