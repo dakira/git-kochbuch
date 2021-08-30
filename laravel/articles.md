@@ -28,6 +28,7 @@
 ## Misc
 - [How to Add Caching to Your Website](https://smyck.net/2019/05/25/how-to-cache-your-website/)
 - \* [CSS Utility Classes and "Separation of Concerns"](https://adamwathan.me/css-utility-classes-and-separation-of-concerns/)
+- [Lighthouse](https://lighthouse-php.com), A framework for serving GraphQL from Laravel
 
 # Books
 - [Shape Up](https://basecamp.com/shapeup), Basecamps book on Agile.
