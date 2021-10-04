@@ -18,6 +18,7 @@ Eine Liste von unsortierten git Tipps.
     - [git reset (auf einen Commit zurückspringen)](#git-reset-auf-einen-commit-zurückspringen)
     - [git clean (nicht getrackte Dateien löschen)](#git-clean-nicht-getrackte-dateien-löschen)
     - [Undo als NEUER Commit AUF den ungewollten Commits](#undo-als-neuer-commit-auf-den-ungewollten-commits)
+    - [Ungewollte commits in eigenen Branch schieben](#ungewollte-commits-in-eigenen-Branch-schieben)
 - [Getrackte Dateien *vergessen*](#getrackte-dateien-vergessen)
 - [Die Geschichte neu schreiben](#die-geschichte-neu-schreiben)
     - [Rebase to master](#rebase-to-master)
@@ -205,6 +206,22 @@ git reset --soft HEAD@{1}
 
 git commit -m "Revert to 56e05fced"
 ```
+
+### Ungewollte commits in eigenen Branch schieben
+
+Manchmal hat man aus Versehen etwas auf dem `master` Branch commited, was eigentlich in einem Feature-Branch hätte landen sollen. Naïv könnte man annehmen man erstellt einfach ein Branch ausgehend von master und löscht danach die commits auf master (reset --hard).
+
+Da der neue Branch master trackt und die Änderung (das Löschen der ungewollten commits) nach Erstellung des Branches erfolgten, würden die entspr. Commits bei einem rebase auf master kommentarlos gelöscht werden.
+
+So funktioniert es:
+
+```bash
+git reset --keep <commit-id>
+git checkout -t -b <branch-name>
+git cherry-pick ..HEAD@{2}
+```
+
+Zuerst löschen wir die Commits auf dem master Branch in dem wir den Branch auf (`--keep` ist wie `--hard` aber mit Schutz vor Datenverlust). Danach erstellen wir den Branch auf dem die Commits zukünftig landen sollen. Mit `cherry-pick` holen wir uns nun einzeln alle Commits aus dem reflog zurück. `HEAD@{2}` entspricht hierbei dem Stand des Repositories vor 2 Aktionen, also vor dem Erstellen des Branches und vor dem reset.
 
 ## Getrackte Dateien *vergessen*
 
