@@ -4,6 +4,7 @@ Eine Liste von unsortierten git Tipps.
 ## Inhalt
 
 - [Grundbefehle](#grundbefehle)
+- [Konfiguration](#konfiguration)
 - [Commits und ihre Nachrichten](#commits-und-ihre-nachrichten)
 - [Workflow](#workflow)
 - [Remotes](#remotes)
@@ -28,6 +29,7 @@ Eine Liste von unsortierten git Tipps.
 - [Diff](#diff)
 - [Beispiele](#beispiele)
     - [Opensource Workflow](#opensource-workflow)
+    - [.gitconfig Beispiel](#gitconfig-beispiel)
 
 ## Grundbefehle
 
@@ -41,6 +43,29 @@ Eine Liste von unsortierten git Tipps.
 | `git push` | Änderungen an einen Server übertragen |
 | `git pull` | Änderungen von einem Server übertragen |
 | `git checkout <branchname>` | In einen anderen branch wechseln |
+
+## Konfiguration
+
+Ein paar Einstellungen für git sollten systemweit konfiguriert werden. Hier zunächst das Minimum, was man einstellen sollte:
+
+```bash
+# Commit-Autoren setzen
+git --global config user.name "Vorname Nachname"
+git --global config user.email user@example.com
+
+# "git push" ohne weitere Paramter pusht immer auf eine remote branch
+# mit dem gleichen Namen wie die aktuelle Branch, so spart man sich
+# git push origin HEAD einzugeben (was ansonsten die aktuelle branch
+# Richtung remote schickt)
+git --global config push.default current
+
+# Dafür sorgen, dass beim Commit IMMER Unix Line-Endings genutzt werden
+# Ist default in Linux/macOS, aber nicht in Windows (WSL2). In Windows
+# unbedingt setzen!
+git config --global core.autocrlf input
+```
+
+Für weitere Einstellungen meine [.gitconfig](#gitconfig-beispiel) unter macOS. 
 
 ## Commits und ihre Nachrichten
 
@@ -361,3 +386,43 @@ Hier in Kürze, wie man zu einem Opensource-Projekt beiträgt:
     git branch -D BRANCH_NAME
     git push origin --delete BRANCH_NAME
     ```
+
+### .gitconfig Beispiel
+
+Die globale Konfigutation von git liegt in der .gitconfig im Homeverzeichnis. Sie könnte z.B. so aussehen:
+
+```
+[user]
+    email = me@example.com
+    name = Me
+[color]
+    ui = true
+[diff]
+    tool = meld
+[difftool]
+    prompt = false
+[difftool "meld"]
+    trustExitCode = true
+    cmd = meld "$LOCAL" "$REMOTE"
+[merge]
+    tool = meld
+[mergetool "meld"]
+    trustExitCode = true
+    # meld shows three panes with two possible configurations from left to right
+    # uncomment what you prefer:
+    # local file, file with conflict data, remote file
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output="$MERGED"
+    # local file, common ancestor, remote file
+    #cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output="$MERGED"
+[alias]
+    ll = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    amend = commit -a --amend --no-edit
+[push]
+    default = current
+[pull]
+    ff = only
+[credential]
+    helper = osxkeychain
+[init]
+    defaultBranch = main
+```
