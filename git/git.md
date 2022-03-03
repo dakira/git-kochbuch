@@ -190,12 +190,12 @@ git checkout --theirs -- path/to/some/file
 
 Aber was ist nun *ours* oder *theirs*, master oder feature? Die folgende Tabelle zeigt das für die möglichen Konfliktfälle in einer groben Vereinfachung.
 
-| Operation | Ours | Theirs |
-|-----------|------|--------|
-| <pre lang="bash">git checkout master<br>git merge feature</pre> | master | feature |
-| <pre lang="bash">git checkout feature<br>git rebase master</pre> | master | feature |
-| <pre lang="bash">git checkout feature<br>git cherry-pick commit-id</pre> | feature | commit-id |
-| <pre lang="bash">git checkout feature<br>git revert commit-id</pre> | feature | invers von commit-id |
+| Operation | ausgeführt in | Ours | Theirs |
+|-----------|---------------|------|--------|
+| `git merge feature` | master |master | feature |
+| `git rebase master` | feature | master | feature |
+| `git cherry-pick commit-id` | feature | feature | commit-id |
+| `git revert commit-id` | feature | feature | Gegenteil der Änderungen von commit-id |
 
 *Ours* ist grob immer der HEAD der Branch, auf der die Operation ausgeführt wird. Bei einem Merge, die Branch, in welche hineingemerged wird. Bei Cherry-Picking ist es die Branch, auf welche ein einzelner Commit gesetzt werden soll.
 
@@ -209,7 +209,7 @@ Mit `git revert <commit-id>` kann man die Änderungen eines beliebigen Commits a
 
 ### git reset (auf einen Commit zurückspringen)
 
-Mit `git reset <commit-id>` setzt man die aktuelle Branch auf den Stand von `<commit-id>`. `git reset HEAD~` spring zum vorherigen Commit (*HEAD~*). Bei einem reset bleiben alle Änderungen der durch den reset gelöschen Commits als nicht-committete Änderungen bestehen.
+Mit `git reset <commit-id>` setzt man die aktuelle Branch auf den Stand von `<commit-id>`. `git reset HEAD~` spring zum vorherigen Commit (*HEAD\~*). Bei einem reset bleiben alle Änderungen der durch den reset gelöschen Commits als nicht-committete Änderungen bestehen.
 
 Führt man stattdessen `git reset --hard <commit-id>` aus, sind auch die Änderungen weg.
 
