@@ -1,11 +1,9 @@
 # Laravel Packages
 
-## Top 6
+## Top 5
 
 - [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
-- [Laravel 5 Extended Generators](https://github.com/laracasts/Laravel-5-Generators-Extended), more make: generators (e.g. for pivot tables)
 - [Html Menu Generator for Laravel](https://github.com/spatie/laravel-menu), generate menus with options to automatically highlight active menu entry
-- [Laravel HTML](https://github.com/spatie/laravel-html), Painless html generation (replaces old HTML and FORM helpers)
 - [Laravel Medialibrary](https://github.com/spatie/laravel-medialibrary), Associate files with Eloquent models
 - [Bouncer](https://github.com/JosephSilber/bouncer), Bouncer is an elegant, framework-agnostic approach to managing roles and abilities for any app using Eloquent models.
 
@@ -21,6 +19,7 @@
 - [LaravelCollective Errors](https://github.com/LaravelCollective/errors), the old nice looking error pages
 - [Laravel Package Boilerplate](https://laravelpackageboilerplate.com/)
 - [Envault](https://github.com/envault/envault), share and sync .env secrets across a team
+- [Roach PHP](https://github.com/roach-php/core), webscraping toolkit
 
 ## Numbers, Money, Intl
 
@@ -28,6 +27,7 @@
 - [addressing](https://github.com/commerceguys/addressing), library for international addressing
 - [intl](https://github.com/commerceguys/intl), A PHP internationalization library, powered by CLDR data (formats numbers, currencies and languages)
 - [tax](https://github.com/commerceguys/tax), a library for tax calculations
+- [statistics](https://github.com/Hi-Folks/statistics), PHP package that provides functions for calculating mathematical statistics of numeric data.
 
 ## Other great packages
 
