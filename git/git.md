@@ -55,14 +55,14 @@ Ein paar Einstellungen für git sollten systemweit konfiguriert werden. Hier zun
 
 ```bash
 # Commit-Autoren setzen
-git --global config user.name "Vorname Nachname"
-git --global config user.email user@example.com
+git config --global user.name "Vorname Nachname"
+git config --global user.email user@example.com
 
 # "git push" ohne weitere Paramter pusht immer auf eine remote branch
 # mit dem gleichen Namen wie die aktuelle Branch, so spart man sich
 # git push origin HEAD einzugeben (was ansonsten die aktuelle branch
 # Richtung remote schickt)
-git --global config push.default current
+git config --global push.default current
 
 # Dafür sorgen, dass beim Commit IMMER Unix Line-Endings genutzt werden
 # Ist default in Linux/macOS, aber nicht in Windows (WSL2). In Windows
